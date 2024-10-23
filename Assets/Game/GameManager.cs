@@ -4,8 +4,13 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    // Managerクラスをリストで保持（Inspectorに表示される）
-    public DungeonManager dungeonManager;
+    public static GameManager Instance { get; private set; }
+    // デバッグモードのフラグ
+    public bool DebugMode = false;
+
+    // 各種Managerへの参照
+    public RoomManager RoomManager;
+    public AreaManager AreaManager;
     public EnemyManager enemyManager;
     public EventManager eventManager;
     public ItemManager itemManager;
@@ -15,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     void Start(){
         // ダンジョンの生成
-        
+        AreaManager.AreaPartition();
     }
 
 
@@ -36,8 +41,18 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        // 子オブジェクトからすべてのManagerを検出してリストに追加
-        DetectManagers();
+        // シングルトンのインスタンスを設定
+        if (Instance == null)
+        {
+            Instance = this;
+            // 子オブジェクトからすべてのManagerを検出してリストに追加
+            DetectManagers();
+        }
+        else
+        {
+            // 既にインスタンスが存在する場合、このGameManagerを破棄
+            Destroy(gameObject);
+        }
     }
 
 
@@ -63,8 +78,8 @@ public class GameManager : MonoBehaviour
                 if (manager != null && manager.GetType().Name.EndsWith("Manager"))
                 {
                     managers.Add(manager);
-
-                    if (manager is DungeonManager) dungeonManager = (DungeonManager)manager;
+                    if (manager is RoomManager) RoomManager = (RoomManager) manager;
+                    if (manager is AreaManager) AreaManager = (AreaManager)manager;
                     if (manager is EnemyManager) enemyManager = (EnemyManager)manager;
                     if (manager is EventManager) eventManager = (EventManager)manager;
                     if (manager is ItemManager) itemManager = (ItemManager)manager;
@@ -72,6 +87,14 @@ public class GameManager : MonoBehaviour
 
                 }
             }
+        }
+    }
+    // デバッグログを表示するメソッド
+    public static void Log(string message)
+    {
+        if (Instance != null && Instance.DebugMode)
+        {
+            Debug.Log(message);
         }
     }
 }

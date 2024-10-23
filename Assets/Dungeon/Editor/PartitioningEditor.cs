@@ -1,19 +1,19 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(RoomManager))]
-public class RoomGenerationManagerEditor : Editor
+[CustomEditor(typeof(AreaManager))]
+public class PartitioningEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        RoomManager manager = (RoomManager)target;
+        AreaManager manager = (AreaManager)target;
 
         // デフォルトのプロパティ描画
         DrawDefaultInspector();
 
-        if (manager.selectedRoomGenerationAlgorithm != null)
+        if (manager.selectedPartitioningAlgorithm != null)
         {
-            SerializedObject algorithmObject = new SerializedObject(manager.selectedRoomGenerationAlgorithm);
+            SerializedObject algorithmObject = new SerializedObject(manager.selectedPartitioningAlgorithm);
             SerializedProperty property = algorithmObject.GetIterator();
 
             // 内部のプロパティを描画

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IPartitioningAlgorithm
 {
-    void Partition(Node node);
+    void Partition(Node node, List<Area> area);
 }
