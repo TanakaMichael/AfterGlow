@@ -1,0 +1,4 @@
+repository "AfterGlow@macaronkunkun@cloud"
+  path "/"
+    br "/main"
+    co "/main"
