@@ -20,7 +20,10 @@ public class GameManager : MonoBehaviour
 
     void Start(){
         // ダンジョンの生成
-        AreaManager.AreaPartition();
+        AreaManager.AreaPartition(); // エリアの分割
+
+        RoomManager.AssignRoomPositions(AreaManager.areas); // エリアを基準に部屋の位置を決める
+        RoomManager.AssignRoomType(); // 部屋の種類を決める
     }
 
 

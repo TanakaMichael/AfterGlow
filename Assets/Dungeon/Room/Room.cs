@@ -8,5 +8,13 @@ public class Room
     public int x, y;
     public int width, height;
     public RoomType roomType;
+    public Room(int id, int x, int y, int width, int height){
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.roomType = RoomType.Empty;
+    }
 
 }
