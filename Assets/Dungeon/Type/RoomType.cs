@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomType : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public enum RoomType{
+    Entrance,
+    Exit,
+    Standard,
+    Secret,
+    Boss,
+    Treasure,
+    Puzzle,
+    Shop,
+    Rest,
+    Trap, 
+    Empty,
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

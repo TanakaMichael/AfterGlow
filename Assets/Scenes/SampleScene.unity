@@ -418,6 +418,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0cb8f36e43a39545bc424621dfebb20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionMethod: 0
+  numberOfRoomsToSelect: 5
+  defaultRoomType: 2
+  roomTypeSettings:
+  - {fileID: 11400000, guid: 2a0fdda4652ad7a4299720aa96776e00, type: 2}
+  - {fileID: 11400000, guid: 99ff3381d53eec5489aae5f4700f6c41, type: 2}
 --- !u!1 &1539500560
 GameObject:
   m_ObjectHideFlags: 0

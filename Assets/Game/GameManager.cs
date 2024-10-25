@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     // デバッグモードのフラグ
     public bool DebugMode = false;
+    public int DungeonLevel = 1;
+    
 
     // 各種Managerへの参照
     public RoomManager RoomManager;
@@ -15,7 +17,6 @@ public class GameManager : MonoBehaviour
     public EventManager eventManager;
     public ItemManager itemManager;
     public SpecialObjectManager specialObjectManager;
-    public static bool debug = false;
     private List<MonoBehaviour> managers = new List<MonoBehaviour>();
 
     void Start(){
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour
 
         RoomManager.AssignRoomPositions(AreaManager.areas); // エリアを基準に部屋の位置を決める
         RoomManager.AssignRoomType(); // 部屋の種類を決める
+
+
     }
 
 

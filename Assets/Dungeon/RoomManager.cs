@@ -7,6 +7,7 @@ public class RoomManager : MonoBehaviour
     public AreaSelectionType selectionMethod = AreaSelectionType.CenterFocused;
     public int numberOfRoomsToSelect = 5;
     [Header("Room Type Settings")]
+    public RoomType defaultRoomType = RoomType.Standard;
     public List<RoomTypeSetting> roomTypeSettings;
     private AssignRoomTypes assignRoomTypes = new AssignRoomTypes();
     private RoomSelector roomSelector = new RoomSelector();
@@ -14,9 +15,14 @@ public class RoomManager : MonoBehaviour
     private List<Room> rooms;
 
     public void AssignRoomType(){
-        assignRoomTypes.Assign(rooms, roomTypeSettings);
+        assignRoomTypes.Assign(rooms, roomTypeSettings, defaultRoomType);
     }
     public void AssignRoomPositions(List<Area> areas){
-        roomSelector.SelectAreasForRooms()
+        List<Area> selectArea = roomSelector.SelectAreasForRooms(areas);
+        rooms = roomSelector.GenerateRoomsFromAreas(selectArea); 
+    }
+
+    public void GenerateRoom(){
+        
     }
 }

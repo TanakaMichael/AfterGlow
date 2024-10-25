@@ -1,61 +1,95 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class RoomSelector
+public enum AreaSelectionMethod
 {
-    public List<Area> SelectAreasForRooms(List<Area> areas, AreaSelectionType selectType, int numberOfRoomsToSelect)
+    CenterFocused,     // 中央に寄せる
+    Random,            // 完全ランダム
+    EdgeFocused,       // 端より
+    CircularPattern,   // 円形に配置
+    LinearPattern      // 線形に配置
+}
+
+public class RoomSelector : MonoBehaviour
+{
+    [Header("Area Selection Settings")]
+    public AreaSelectionMethod selectionMethod = AreaSelectionMethod.CenterFocused;
+    public int numberOfRoomsToSelect = 5;
+
+    public List<Area> SelectAreasForRooms(List<Area> areas)
     {
         List<Area> selectedAreas = new List<Area>();
 
-
-        switch (selectType)
+        switch (selectionMethod)
         {
-            case AreaSelectionType.CenterFocused:
-                selectedAreas = SelectCenterFocusedAreas(areas, numberOfRoomsToSelect);
+            case AreaSelectionMethod.CenterFocused:
+                selectedAreas = SelectWeightedRandomFromSortedAreas(SelectCenterFocusedAreas(areas), numberOfRoomsToSelect);
                 break;
 
-            case AreaSelectionType.Random:
+            case AreaSelectionMethod.Random:
                 selectedAreas = SelectRandomAreas(areas, numberOfRoomsToSelect);
                 break;
 
-            case AreaSelectionType.EdgeFocused:
-                selectedAreas = SelectEdgeFocusedAreas(areas, numberOfRoomsToSelect);
+            case AreaSelectionMethod.EdgeFocused:
+                selectedAreas = SelectWeightedRandomFromSortedAreas(SelectEdgeFocusedAreas(areas), numberOfRoomsToSelect);
                 break;
 
-            case AreaSelectionType.CircularPattern:
-                selectedAreas = SelectCircularPatternAreas(areas, numberOfRoomsToSelect);
+            case AreaSelectionMethod.CircularPattern:
+                selectedAreas = SelectWeightedRandomFromSortedAreas(SelectCircularPatternAreas(areas), numberOfRoomsToSelect);
                 break;
 
-            case AreaSelectionType.LinearPattern:
-                selectedAreas = SelectLinearPatternAreas(areas, numberOfRoomsToSelect);
+            case AreaSelectionMethod.LinearPattern:
+                selectedAreas = SelectWeightedRandomFromSortedAreas(SelectLinearPatternAreas(areas), numberOfRoomsToSelect);
                 break;
         }
 
         return selectedAreas;
     }
-    // 中央に寄せてエリアを選択する
-    private List<Area> SelectCenterFocusedAreas(List<Area> areas, int numberToSelect)
+
+    // 中央に寄せてエリアを選択する（ソート）
+    private List<Area> SelectCenterFocusedAreas(List<Area> areas)
     {
         Vector2 center = CalculateCenter(areas);
-
-        // エリアを中心からの距離でソート
         areas.Sort((a, b) =>
         {
             float distanceA = Vector2.Distance(center, new Vector2(a.x + a.width / 2f, a.y + a.height / 2f));
             float distanceB = Vector2.Distance(center, new Vector2(b.x + b.width / 2f, b.y + b.height / 2f));
             return distanceA.CompareTo(distanceB);
         });
+        return areas;
+    }
 
-        // 中央に寄せて選択
-        List<Area> selectedAreas = new List<Area>();
-        for (int i = 0; i < Mathf.Min(numberToSelect, areas.Count); i++)
+    // 端に寄せてエリアを選択する（ソート）
+    private List<Area> SelectEdgeFocusedAreas(List<Area> areas)
+    {
+        areas.Sort((a, b) =>
         {
-            selectedAreas.Add(areas[i]);
-        }
+            float distanceA = Mathf.Min(a.x, a.y, areas[0].width - a.x, areas[0].height - a.y);
+            float distanceB = Mathf.Min(b.x, b.y, areas[0].width - b.x, areas[0].height - b.y);
+            return distanceA.CompareTo(distanceB);
+        });
+        return areas;
+    }
 
-        return selectedAreas;
+    // 円形にエリアを選択する（ソート）
+    private List<Area> SelectCircularPatternAreas(List<Area> areas)
+    {
+        Vector2 center = CalculateCenter(areas);
+        areas.Sort((a, b) =>
+        {
+            float distanceA = Vector2.Distance(center, new Vector2(a.x + a.width / 2f, a.y + a.height / 2f));
+            float distanceB = Vector2.Distance(center, new Vector2(b.x + b.width / 2f, b.y + b.height / 2f));
+            return distanceA.CompareTo(distanceB);
+        });
+        return areas;
+    }
+
+    // 線形にエリアを選択する（ソート）
+    private List<Area> SelectLinearPatternAreas(List<Area> areas)
+    {
+        // とりあえずx座標が偶数のものを優先してソート
+        areas.Sort((a, b) => (a.x % 2).CompareTo(b.x % 2));
+        return areas;
     }
 
     // ランダムにエリアを選択する
@@ -73,58 +107,41 @@ public class RoomSelector
         return selectedAreas;
     }
 
-    // 端に寄せてエリアを選択する
-    private List<Area> SelectEdgeFocusedAreas(List<Area> areas, int numberToSelect)
+    // ソートしたリストから重みに基づいてランダムにエリアを選択する
+    private List<Area> SelectWeightedRandomFromSortedAreas(List<Area> sortedAreas, int numberToSelect)
     {
-        // 端（エッジ）からの距離を求め、ソート
-        areas.Sort((a, b) =>
-        {
-            float distanceA = Mathf.Min(a.x, a.y, areas[0].width - a.x, areas[0].height - a.y);
-            float distanceB = Mathf.Min(b.x, b.y, areas[0].width - b.x, areas[0].height - b.y);
-            return distanceA.CompareTo(distanceB);
-        });
-
-        List<Area> selectedAreas = new List<Area>();
-        for (int i = 0; i < Mathf.Min(numberToSelect, areas.Count); i++)
-        {
-            selectedAreas.Add(areas[i]);
-        }
-
-        return selectedAreas;
-    }
-
-    // 円形にエリアを選択する
-    private List<Area> SelectCircularPatternAreas(List<Area> areas, int numberToSelect)
-    {
-        // 中心点を求める
-        Vector2 center = CalculateCenter(areas);
-
-        // 円形に選択
         List<Area> selectedAreas = new List<Area>();
 
-        for (int i = 0; i < areas.Count && selectedAreas.Count < numberToSelect; i++)
+        for (int i = 0; i < numberToSelect; i++)
         {
-            float distance = Vector2.Distance(center, new Vector2(areas[i].x + areas[i].width / 2f, areas[i].y + areas[i].height / 2f));
-            if (distance <= Mathf.Max(areas[0].width, areas[0].height) / 2f)
+            if (sortedAreas.Count == 0)
             {
-                selectedAreas.Add(areas[i]);
+                break; // 選択可能なエリアがなくなった場合
             }
-        }
 
-        return selectedAreas;
-    }
+            // インデックスに基づいて重みを計算（先頭が選ばれやすくなるように設定）
+            float totalWeight = 0f;
+            List<float> cumulativeWeights = new List<float>();
 
-    // 線形にエリアを選択する
-    private List<Area> SelectLinearPatternAreas(List<Area> areas, int numberToSelect)
-    {
-        // 水平方向に選択
-        List<Area> selectedAreas = new List<Area>();
-
-        for (int i = 0; i < areas.Count && selectedAreas.Count < numberToSelect; i++)
-        {
-            if (areas[i].x % 2 == 0)
+            for (int j = 0; j < sortedAreas.Count; j++)
             {
-                selectedAreas.Add(areas[i]);
+                float weight = 1f / (j + 1); // インデックスが低いほど高い重みを持つ
+                totalWeight += weight;
+                cumulativeWeights.Add(totalWeight);
+            }
+
+            // ランダムな値を選択
+            float randomValue = Random.Range(0, totalWeight);
+
+            // 重みに基づいてエリアを選択
+            for (int j = 0; j < cumulativeWeights.Count; j++)
+            {
+                if (randomValue <= cumulativeWeights[j])
+                {
+                    selectedAreas.Add(sortedAreas[j]);
+                    sortedAreas.RemoveAt(j);
+                    break;
+                }
             }
         }
 
@@ -157,13 +174,25 @@ public class RoomSelector
 
         return new Vector2(totalX / areas.Count, totalY / areas.Count);
     }
-    // エリアからルームに変換するメソッド (多分使わない)
-    private void ConvertAreasToRooms(List<Area> areas, List<Room> rooms){
-        if(rooms == null) rooms = new List<Room>();
+    private int roomIdCounter = 0;
 
-        foreach(Area area in areas){
-            Room room = new Room(area.id, area.x, area.y, area.width, area.height);
+    // 部屋を生成する前段階：エリアIDと部屋IDを割り当てる
+    public List<Room> GenerateRoomsFromAreas(List<Area> selectedAreas)
+    {
+        List<Room> rooms = new List<Room>();
+
+        foreach (Area area in selectedAreas)
+        {
+            // 部屋IDを割り当て
+            int roomId = roomIdCounter++;
+
+            // エリアから部屋を作成（部屋の位置とサイズはエリアと同じに設定）
+            Room room = new Room(roomId, area.x, area.y, area.width, area.height, area.id);
+
+            // Roomリストに追加
             rooms.Add(room);
         }
+
+        return rooms;
     }
 }
