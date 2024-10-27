@@ -11,5 +11,9 @@ public class RoomTypeSetting : ScriptableObject
     public int maxCount = -1;        // 最大数（-1は任意設定）
     public float weight = 1.0f;      // 部屋選択の重み（確率を調整するため）
     public bool isMandatory = false; // 必須かどうか
+    [Range(0f, 1f)]
     public float isFixedProbability = 0.0f; // 部屋が固定かどうかの確率
+
+    public EntranceExitSettings entranceSettings;
+    public EntranceExitSettings exitSettings;
 }

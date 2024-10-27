@@ -1,8 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
-[CreateAssetMenu(fileName = "SpawnNPCSettings", menuName = "Dungeon/NPC/SpawnSettings")]
-public class SpawnNPCSettings : ScriptableObject
+[System.Serializable]
+public class SpawnNPCSettings
 {
-    public 
+    public NPCSpawnPattern SpawnType { get; set; }
+
+    [Tooltip("Specificを選択時のみ有効")]
+    public List<NPC> NPCList { get; set; } // SpawnTypeでSpecificを選択時のみ
+    public bool isEnable = false;
+    public SpawnNPCSettings(bool isEnable = false){
+        this.isEnable = isEnable;
+    }
 }

@@ -9,7 +9,21 @@ public class CustomTile : Tile
     public SpawnSpecialObjectSettings spawnSpecialObjectSettings = new SpawnSpecialObjectSettings();
     public SpawnEnemySettings spawnEnemySettings = new SpawnEnemySettings();
     public SpawnNPCSettings spawnNPCSettings = new SpawnNPCSettings();
+    public DesignType designType = DesignType.None;
+    public DesignCategory designCategory = DesignCategory.None;
     public bool isExit = false;
     public bool isEntrance = false;
     public int priority = 0; // 優先度
+    public void SetDesignType(DesignCategory designCategory){
+        if(designCategory == DesignCategory.Floor){
+            if(Random.value < 0.1f) designType = DesignType.CrackedStoneFloor;
+            else designType = DesignType.StoneFloor; 
+        }
+        else if(designCategory == DesignCategory.Wall){
+            if(Random.value < 0.1f) designType = DesignType.CrackedStoneWall;
+            else designType = DesignType.StoneWall;
+        }
+        this.designCategory = designCategory;
+    }
+
 }

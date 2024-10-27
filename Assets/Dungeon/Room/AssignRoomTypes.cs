@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AssignRoomTypes : MonoBehaviour
+public class AssignRoomTypes
 {
     public void Assign(List<Room> rooms, List<RoomTypeSetting> options, RoomType defaultRoomType)
     {
+        GameManager.Log($"割り当て可能な部屋の数 :{rooms.Count}");
         // 必須の部屋タイプを先に割り当て
         foreach (var setting in options)
         {

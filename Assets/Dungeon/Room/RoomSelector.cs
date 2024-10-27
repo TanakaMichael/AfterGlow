@@ -9,17 +9,17 @@ public enum AreaSelectionMethod
     CircularPattern,   // 円形に配置
     LinearPattern      // 線形に配置
 }
-
-public class RoomSelector : MonoBehaviour
+[System.Serializable]
+public class RoomSelector
 {
     [Header("Area Selection Settings")]
     public AreaSelectionMethod selectionMethod = AreaSelectionMethod.CenterFocused;
     public int numberOfRoomsToSelect = 5;
-
     public List<Area> SelectAreasForRooms(List<Area> areas)
     {
         List<Area> selectedAreas = new List<Area>();
-
+        if(numberOfRoomsToSelect == -1) numberOfRoomsToSelect = areas.Count;
+        Debug.Log(numberOfRoomsToSelect);
         switch (selectionMethod)
         {
             case AreaSelectionMethod.CenterFocused:
@@ -111,6 +111,7 @@ public class RoomSelector : MonoBehaviour
     private List<Area> SelectWeightedRandomFromSortedAreas(List<Area> sortedAreas, int numberToSelect)
     {
         List<Area> selectedAreas = new List<Area>();
+        GameManager.Log($"SelectWeightedRandomFromSortedAreas: {sortedAreas.Count}, {numberToSelect}");
 
         for (int i = 0; i < numberToSelect; i++)
         {
@@ -144,7 +145,7 @@ public class RoomSelector : MonoBehaviour
                 }
             }
         }
-
+        GameManager.Log($"SelectWeightedRandomFromSortedAreas: {sortedAreas.Count}");
         return selectedAreas;
     }
 

@@ -15,10 +15,12 @@ public class BSPGeneration : ScriptableObject, IPartitioningAlgorithm
         // BSP木構造を生成する
         areaPartition(node, areas);
         // 生成したエリアをテスト表示
+        string str = "";
         foreach (Area area in areas)
         {
-            GameManager.Log($"エリア X: {area.x}, Y: {area.y}, 幅: {area.width}, 高さ: {area.height}");
+            str += $"エリア X: {area.x}, Y: {area.y}, 幅: {area.width}, 高さ: {area.height}\n";
         }
+        GameManager.Log(str);
     }
     public void areaPartition(Node node, List<Area> area, int depth = 0){
         // 最大深度に達した場合又は、最小分割サイズ以下であったなら停止

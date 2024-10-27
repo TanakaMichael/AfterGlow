@@ -18,3 +18,11 @@ MonoBehaviour:
   weight: 1
   isMandatory: 1
   isFixedProbability: 0.5
+  entranceSettings:
+    minCount: 1
+    maxCount: 2
+    spawnPosition: 3
+  exitSettings:
+    minCount: 1
+    maxCount: 2
+    spawnPosition: 3

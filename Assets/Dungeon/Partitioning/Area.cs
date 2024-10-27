@@ -20,7 +20,7 @@ public class Area
     }
 
     // 中心座標を取得するメソッド
-    public Vector2 GetCenter()
+    public Vector2 GetCenterInt()
     {
         return new Vector2(x + width / 2f, y + height / 2f);
     }

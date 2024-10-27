@@ -14,5 +14,6 @@ public enum RoomType{
     Rest,
     Trap, 
     Empty,
+    Free, 
 
 }

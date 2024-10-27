@@ -1,18 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu(fileName = "SpawnSpecialObject", menuName = "Dungeon/SpecialObject/SpawnSettings")]
-public class SpawnSpecialObjectSettings : ScriptableObject
+[System.Serializable]
+public class SpawnSpecialObjectSettings
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // SpawnSpecialObjectSettingsはManagerに送る設定のみ行う
+    // その他のロジックはManagerに任せる
+    public SpecialObjectSpawnPattern specialObjectSpawnPattern = new SpecialObjectSpawnPattern(); ///
+    public SpecialObject specialObject;
+    public bool isEnable = false;
 }
