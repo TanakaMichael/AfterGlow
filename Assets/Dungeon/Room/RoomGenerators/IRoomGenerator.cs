@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DesignCategory
+public interface IRoomGenerator
 {
-    None,
-    Wall, 
-    Floor,
-    Gate,
+    void GenerateRoom(Room room);
 }

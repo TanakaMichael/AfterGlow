@@ -10,10 +10,5 @@ public class SpawnSettings
     public int maxSpawnCount = 3; // 最大出現数
 
     public SpawnPosition spawnPosition = SpawnPosition.Random; // 配置場所
-
-    // それぞれの設定
-    public SpawnSpecialObjectSettings specialObjectSettings;
-    public SpawnEnemySettings enemySettings;
-    public SpawnNPCSettings npcSettings;
 }
 

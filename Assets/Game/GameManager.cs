@@ -25,7 +25,8 @@ public class GameManager : MonoBehaviour
 
         RoomManager.AssignRoomPositions(AreaManager.areas); // エリアを基準に部屋の位置を決める
         RoomManager.AssignRoomType(); // 部屋の種類を決める
-        RoomManager.GenerateRoom(); // 部屋を生成する
+        RoomManager.GenerateRooms(); // 部屋を生成する
+        RoomManager.AssignEntrance
 
     }
 

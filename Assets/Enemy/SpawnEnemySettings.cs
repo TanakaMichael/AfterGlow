@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[System.Serializable]
-public class SpawnEnemySettings
+[CreateAssetMenu(fileName = "new SpawnSpecialObject", menuName = "Dungeon/Room/Spawn/Enemy")]
+public class SpawnEnemySettings : ScriptableObject
 {
     public  EnemySpawnPattern enemySpawnPattern = new EnemySpawnPattern();
     [Tooltip("Specificを選択時のみ有効")]

@@ -4,17 +4,19 @@ using UnityEngine;
 public class Room
 {
     public int id;
-    public int areaId;
     public int x, y;
     public int width, height;
     public RoomType roomType;
     public bool isFixed = false;
+    public Area area;
 
     public List<List<TileData>> tiles = new List<List<TileData>>();
     public List<(int x, int y, int priority)> entrances = new List<(int, int, int)>();
     public List<(int x, int y, int priority)> exits = new List<(int, int, int)>();
 
-    public Room(int id, int x, int y, int width, int height, int areaId = 0)
+
+
+    public Room(int id, int x, int y, int width, int height, Area area)
     {
         this.id = id;
         this.x = x;
@@ -22,8 +24,8 @@ public class Room
         this.width = width;
         this.height = height;
         this.roomType = RoomType.Empty;
-        this.areaId = areaId;
         this.isFixed = false;
+        this.area = area;
     }
 
     public Vector2Int GetCenterInt()
@@ -42,7 +44,7 @@ public class Room
     public void ApplyFixedRoomData(FixedRoom fixedRoom)
     {
         this.x = fixedRoom.basePosition.x + Random.Range(0, fixedRoom.baseSize.x - fixedRoom.size.x);
-        this.y = fixedRoom.basePosition.y + Random.Range(0, fixedRoom.baseSize.y - fixedRoom.size.y);
+        this.y = fixedRoom.basePosition.y +Random.Range(0, fixedRoom.baseSize.y - fixedRoom.size.y);
         this.width = fixedRoom.size.x;
         this.height = fixedRoom.size.y;
         ConvertCustomTileToTileData(fixedRoom.tiles, this.tiles);

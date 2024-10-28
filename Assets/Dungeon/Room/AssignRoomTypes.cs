@@ -80,7 +80,7 @@ public class AssignRoomTypes
         string str = "";
         foreach (var room in rooms)
         {
-            str += $"id: {room.id}, area id: {room.areaId}, roomType: {room.roomType}, isFixed: {room.isFixed}\n";
+            str += $"id: {room.id}, area id: {room.area}, roomType: {room.roomType}, isFixed: {room.isFixed}\n";
         }
         GameManager.Log(str);
     }

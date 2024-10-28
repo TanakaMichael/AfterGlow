@@ -11,7 +11,7 @@ public class FixedRoom : ScriptableObject
     public Vector2Int size; // 部屋のサイズ (幅, 高さ)
     public Vector2Int baseSize;
     public Vector2Int basePosition;
-    
+
     public RoomType roomType; // 部屋の種類
     public int priority = 1; // 挿入の優先度（高いほど優先的に選ばれる）
 
@@ -98,7 +98,7 @@ public class FixedRoom : ScriptableObject
     /// <param name="areaId">関連付けるエリアの ID</param>
     /// <param name="position">エリア内での配置位置</param>
     /// <returns>生成された Room インスタンス</returns>
-    public Room ToRoom(int roomId, int areaId, Vector2Int position)
+    public Room ToRoom(int roomId, Area area, Vector2Int position)
     {
         // Tile データがまだ抽出されていない場合は抽出する
         if (!isDataExtracted)
@@ -108,7 +108,7 @@ public class FixedRoom : ScriptableObject
         }
     
         // 新しい Room を作成
-        Room room = new Room(roomId, position.x, position.y, size.x, size.y, areaId);
+        Room room = new Room(roomId, position.x, position.y, size.x, size.y, area);
     
         // FixedRoom のデータを Room に適用
         room.ApplyFixedRoomData(this);
@@ -171,7 +171,7 @@ public class FixedRoom : ScriptableObject
         Vector2Int position = new Vector2Int(roomX, roomY);
 
         // 4. FixedRoom から Room を生成
-        Room newRoom = selectedFixedRoom.ToRoom(roomId, area.id, position);
+        Room newRoom = selectedFixedRoom.ToRoom(roomId, area, position);
 
 
         return newRoom;

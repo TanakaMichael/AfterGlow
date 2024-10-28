@@ -188,7 +188,7 @@ public class RoomSelector
             int roomId = roomIdCounter++;
 
             // エリアから部屋を作成（部屋の位置とサイズはエリアと同じに設定）
-            Room room = new Room(roomId, area.x, area.y, area.width, area.height, area.id);
+            Room room = new Room(roomId, 0, 0, 0, 0, area);
 
             // Roomリストに追加
             rooms.Add(room);

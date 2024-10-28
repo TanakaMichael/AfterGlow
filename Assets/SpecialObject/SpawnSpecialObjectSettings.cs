@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[System.Serializable]
-public class SpawnSpecialObjectSettings
+[CreateAssetMenu(fileName = "new SpawnSpecialObject", menuName = "Dungeon/Room/Spawn/SpecialObject")]
+public class SpawnSpecialObjectSettings : ScriptableObject
 {
     // SpawnSpecialObjectSettingsはManagerに送る設定のみ行う
     // その他のロジックはManagerに任せる

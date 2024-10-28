@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
-[System.Serializable]
-public class SpawnNPCSettings
+[CreateAssetMenu(fileName = "new SpawnSpecialObject", menuName = "Dungeon/Room/Spawn/NPC")]
+public class SpawnNPCSettings : ScriptableObject
 {
     public NPCSpawnPattern SpawnType { get; set; }
 

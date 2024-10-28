@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Sample1
   m_EditorClassIdentifier: 
   size: {x: 7, y: 9}
+  baseSize: {x: 24, y: 26}
+  basePosition: {x: 0, y: 20}
   roomType: 11
   priority: 1
   prefab: {fileID: 833163407055040934, guid: fd9a22ff5c00575419b29ece216367c6, type: 3}
