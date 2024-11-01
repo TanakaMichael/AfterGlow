@@ -13,6 +13,8 @@ public enum DesignType
     StonePillars,
     CrackedStoneCorridor, 
     StoneCorridor,
-    SecretPassage
+    SecretPassage,
+
+    OuterWall,
     
 }

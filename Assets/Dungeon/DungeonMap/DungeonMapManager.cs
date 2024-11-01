@@ -37,6 +37,9 @@ public class DungeonMapManager : MonoBehaviour
         {
             ApplyCorridorToMap(corridor);
         }
+
+        // 壁の分類を実行
+        ClassifyWalls();
     }
 
     private void ApplyRoomToMap(Room room)
@@ -108,7 +111,6 @@ public class DungeonMapManager : MonoBehaviour
         }
     }
 
-
     private TileType GetTileTypeFromDesignCategory(DesignCategory designCategory)
     {
         switch (designCategory)
@@ -129,5 +131,48 @@ public class DungeonMapManager : MonoBehaviour
     private bool IsWithinBounds(int x, int y)
     {
         return x >= 0 && x < mapWidth && y >= 0 && y < mapHeight;
+    }
+
+    // 壁の分類を行うメソッドを追加
+    private void ClassifyWalls()
+    {
+        for (int x = 0; x < dungeonTiles.Count; x++)
+        {
+            for (int y = 0; y < dungeonTiles[x].Count; y++)
+            {
+                DungeonTile tile = dungeonTiles[x][y];
+
+                // 壁タイルのみを対象
+                if (tile.tileType == TileType.Wall)
+                {
+                    // 上下のタイルを取得
+                    DungeonTile tileAbove = GetTile(x, y + 1);
+                    DungeonTile tileBelow = GetTile(x, y - 1);
+
+                    // 床が下にあり、上が空のタイルの場合
+                    if (tileBelow != null && tileBelow.tileType == TileType.Floor &&
+                        (tileAbove == null || tileAbove.tileType == TileType.Empty))
+                    {
+                        // デザインタイプを外部の壁に変更
+                        tile.designType = DesignType.OuterWall;
+                    }
+                    else
+                    {
+                        // デザインタイプを内部の壁に設定（必要に応じて変更）
+                        tile.designType = DesignType.StoneWall; // または他の内部壁のデザインタイプ
+                    }
+                }
+            }
+        }
+    }
+
+    // 指定座標のタイルを取得するヘルパーメソッド
+    private DungeonTile GetTile(int x, int y)
+    {
+        if (IsWithinBounds(x, y))
+        {
+            return dungeonTiles[x][y];
+        }
+        return null;
     }
 }

@@ -5,5 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new DesignSet", menuName = "Design/Set")]
 public class TileSet : ScriptableObject
 {
+    public string setName;
     public List<TilePrefab> tilePrefabs; // DesignType と対応する GameObject のリスト
 }

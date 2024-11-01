@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public EventManager eventManager;
     public ItemManager itemManager;
     public SpecialObjectManager specialObjectManager;
+    public LayoutManager layoutManager;
     private List<MonoBehaviour> managers = new List<MonoBehaviour>();
 
     void Start(){
@@ -29,25 +30,10 @@ public class GameManager : MonoBehaviour
         RoomManager.GenerateRooms(); // 部屋を生成する
         RoomManager.AssignSpawnData(); // スポーンデータの設定
         corridorManager.GenerateCorridors(RoomManager.rooms); // 通路を生成する
+        layoutManager.GenerateLayout(); // ダンジョンを配置
 
-
+        specialObjectManager.SpawnSpecialObjects(); // specialObjectを生成する
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     void Awake()
     {
@@ -64,16 +50,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-
-
-
-
-
-
-
-
-
 
     // 子供のManagerを自動で検出し、リストに追加
     private void DetectManagers()
@@ -95,17 +71,25 @@ public class GameManager : MonoBehaviour
                     if (manager is ItemManager) itemManager = (ItemManager)manager;
                     if (manager is SpecialObjectManager) specialObjectManager = (SpecialObjectManager)manager;
                     if (manager is CorridorManager) corridorManager = (CorridorManager)manager;
+                    if (manager is LayoutManager) layoutManager = (LayoutManager)manager;
 
                 }
             }
         }
     }
+
     // デバッグログを表示するメソッド
-    public static void Log(string message)
+    public static void Log(string message, int type = 0)
     {
         if (Instance != null && Instance.DebugMode)
         {
+            if(type == 0)
             Debug.Log(message);
+            if(type == 1)
+            Debug.LogWarning(message);
+            if(type == 2)
+            Debug.LogError(message);
+
         }
     }
 }
