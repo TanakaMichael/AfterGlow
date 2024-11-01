@@ -44,10 +44,13 @@ public class BasicRoomGenerator : RoomGeneratorBase
                     isWalkable = true,
                     designCategory = DesignCategory.Floor
                 };
+                tile.SetDesignType(DesignCategory.Floor);
                 row.Add(tile);
             }
             room.tiles.Add(row);
         }
+        // 部屋の輪郭を壁で覆う
+        SetRoomOutlineAsWalls(room);
 
         // 出入り口のウェイト設定
         SetEntranceExitWeights(room, true); // Entrance

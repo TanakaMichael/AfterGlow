@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 /// <summary>
-/// RoomManagerから取得した部屋情報をGizmosで表示するクラス
+/// RoomManagerとCorridorManagerから取得した情報をGizmosで表示するクラス
 /// </summary>
 [ExecuteAlways]
 public class MapGizmosDrawer : MonoBehaviour
@@ -14,9 +14,12 @@ public class MapGizmosDrawer : MonoBehaviour
     [Header("References")]
     [Tooltip("マップを管理するRoomManagerへの参照")]
     public RoomManager roomManager;
+    [Tooltip("廊下を管理するCorridorManagerへの参照")]
+    public CorridorManager corridorManager;
 
     [Header("Gizmos Settings")]
     public Color roomColor = Color.green;
+    public Color corridorColor = Color.cyan;
     public Color entranceColor = Color.blue;
     public Color exitColor = Color.red;
     public Color wallColor = Color.gray;
@@ -52,6 +55,15 @@ public class MapGizmosDrawer : MonoBehaviour
             DrawEntrances(room);
             DrawExits(room);
             DrawRoomInfo(room);
+        }
+
+        // CorridorManagerが設定されている場合、廊下を描画
+        if (corridorManager != null && corridorManager.corridors != null)
+        {
+            foreach (Corridor corridor in corridorManager.corridors)
+            {
+                DrawCorridor(corridor);
+            }
         }
     }
 
@@ -116,7 +128,7 @@ public class MapGizmosDrawer : MonoBehaviour
                 Gizmos.DrawCube(worldPosition + new Vector3(tileSize / 2, tileSize / 2, 0), Vector3.one * tileSize * 0.9f);
 
                 // SpecialObjectが存在する場合、アイコンを表示
-                if (tile.spawnSpecialObjectSettings.isEnable)
+                if (tile.spawnSpecialObjectSettings != null && tile.spawnSpecialObjectSettings.isEnable)
                 {
                     #if UNITY_EDITOR
                     Handles.Label(worldPosition + new Vector3(tileSize / 2, tileSize / 2, 0), "S");
@@ -124,7 +136,7 @@ public class MapGizmosDrawer : MonoBehaviour
                 }
 
                 // Enemyが存在する場合、別のアイコンを表示
-                if (tile.spawnEnemySettings.isEnable)
+                if (tile.spawnEnemySettings != null && tile.spawnEnemySettings.isEnable)
                 {
                     #if UNITY_EDITOR
                     Handles.Label(worldPosition + new Vector3(tileSize / 2, tileSize / 2, 0), "E");
@@ -132,7 +144,7 @@ public class MapGizmosDrawer : MonoBehaviour
                 }
 
                 // NPCが存在する場合、さらに別のアイコンを表示
-                if (tile.spawnNPCSettings.isEnable)
+                if (tile.spawnNPCSettings != null && tile.spawnNPCSettings.isEnable)
                 {
                     #if UNITY_EDITOR
                     Handles.Label(worldPosition + new Vector3(tileSize / 2, tileSize / 2, 0), "N");
@@ -180,6 +192,46 @@ public class MapGizmosDrawer : MonoBehaviour
         // 部屋の中心にラベルを表示
         Vector3 roomCenter = new Vector3(room.x + room.width / 2f, room.y + room.height / 2f, 0);
         Handles.Label(roomCenter, $"ID: {room.id}\nType: {room.roomType}");
+        #endif
+    }
+
+    /// <summary>
+    /// 廊下をGizmosで描画する
+    /// </summary>
+    /// <param name="corridor">対象のCorridor</param>
+    private void DrawCorridor(Corridor corridor)
+    {
+        if (corridor.tiles == null || corridor.tiles.Count == 0)
+            return;
+
+        // 廊下のタイルを描画
+        foreach (TileData tile in corridor.tiles)
+        {
+            Vector3 worldPosition = new Vector3(tile.x, tile.y, 0);
+
+            // タイルの種類やプロパティに応じた色を設定
+            if (tile.isWalkable)
+            {
+                Gizmos.color = corridorColor;
+            }
+            else
+            {
+                Gizmos.color = wallColor;
+            }
+
+            // タイルを四角形で描画
+            Gizmos.DrawCube(worldPosition + new Vector3(tileSize / 2, tileSize / 2, 0), Vector3.one * tileSize * 0.9f);
+        }
+
+        #if UNITY_EDITOR
+        // 廊下の経路を線で描画
+        Gizmos.color = corridorColor;
+        for (int i = 0; i < corridor.path.Count - 1; i++)
+        {
+            Vector3 start = new Vector3(corridor.path[i].x + 0.5f, corridor.path[i].y + 0.5f, 0);
+            Vector3 end = new Vector3(corridor.path[i + 1].x + 0.5f, corridor.path[i + 1].y + 0.5f, 0);
+            Gizmos.DrawLine(start, end);
+        }
         #endif
     }
 }

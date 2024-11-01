@@ -14,10 +14,8 @@ public class RoomManager : MonoBehaviour
     public List<FixedRoom> fixedRooms = new List<FixedRoom>();
     [Header("Room Generators")]
     public List<RoomGeneratorBase> roomGenerators; // インスペクターから設定可能
-    [Header("RandomRoom Spawn Settings")]
-    public SpawnSettings NPCSettings;
-    public SpawnSettings EnemySettings;
-    public SpawnSettings SpecialObjectSettings;
+
+    public SpawnManager spawnManager;
     private AssignRoomTypes assignRoomTypes = new AssignRoomTypes();
     private FixedRoomManager fixedRoomManager;
     private EntranceExitManager entranceExitManager = new EntranceExitManager();
@@ -50,6 +48,20 @@ public class RoomManager : MonoBehaviour
             }
             else{
                 GenerateRandomRoom(room);
+            }
+        }
+    }
+
+    public void AssignSpawnData(){
+        foreach (Room room in rooms){
+            RoomTypeSetting rts = roomTypeSettings.FirstOrDefault(setting => setting.roomType == room.roomType);
+            if(rts != null){
+            // NPC
+            if(rts.npcSettings != null) spawnManager.AssignNPCData(room, rts.npcSettings);
+            // enemy
+            if(rts.enemySettings != null) spawnManager.AssignEnemyData(room, rts.enemySettings);
+            // special
+            if(rts.specialObjectSettings != null)spawnManager.AssignSpecialObjectData(room, rts.specialObjectSettings);
             }
         }
     }

@@ -17,8 +17,7 @@ public class FixedRoomManager
             return true; // 成功
         }
         else{
-            Debug.LogError("Failed to generate Fixed Room");
-            Debug.LogError($"Room details : {room.roomType}");
+            Debug.Log("Failed to generate Fixed Room");
             return false; // 失敗
         }
     }

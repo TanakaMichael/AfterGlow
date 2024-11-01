@@ -368,6 +368,7 @@ MonoBehaviour:
   DungeonLevel: 1
   RoomManager: {fileID: 1523422757}
   AreaManager: {fileID: 1523422756}
+  corridorManager: {fileID: 1011116440}
   enemyManager: {fileID: 1539500562}
   eventManager: {fileID: 985213403}
   itemManager: {fileID: 1873172130}
@@ -390,6 +391,7 @@ Transform:
   - {fileID: 1873172129}
   - {fileID: 1484558293}
   - {fileID: 1523422755}
+  - {fileID: 1011116441}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &669572675
@@ -405,7 +407,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomManager: {fileID: 1523422757}
+  corridorManager: {fileID: 1011116440}
   roomColor: {r: 0, g: 1, b: 0, a: 1}
+  corridorColor: {r: 0, g: 1, b: 1, a: 1}
   entranceColor: {r: 0, g: 0, b: 1, a: 1}
   exitColor: {r: 1, g: 0, b: 0, a: 1}
   wallColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -458,6 +462,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6227bab516295644a37f94f5826608d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1011116439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1011116441}
+  - component: {fileID: 1011116440}
+  m_Layer: 0
+  m_Name: CorridorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1011116440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011116439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec048940585beb47bbeccc8f38eb4d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  corridorWidth: 1
+  extraConnectionProbability: 0.048
+  maxBendCount: 3
+  maxConnectionDistance: 50
+--- !u!4 &1011116441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011116439}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 669572674}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1149068610
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,6 +610,7 @@ GameObject:
   - component: {fileID: 1523422755}
   - component: {fileID: 1523422757}
   - component: {fileID: 1523422756}
+  - component: {fileID: 1523422758}
   m_Layer: 0
   m_Name: DungeonManger
   m_TagString: Untagged
@@ -614,12 +667,31 @@ MonoBehaviour:
   roomTypeSettings:
   - {fileID: 11400000, guid: 2a0fdda4652ad7a4299720aa96776e00, type: 2}
   - {fileID: 11400000, guid: 99ff3381d53eec5489aae5f4700f6c41, type: 2}
-  defaultSetting: {fileID: 11400000, guid: a5e6604750c9a7d40aa00ce1f0cf9b2b, type: 2}
+  - {fileID: 11400000, guid: 3d447006d3906c147b4e95e3154ad3a0, type: 2}
+  - {fileID: 11400000, guid: 2b977e7fb6239234e8363f0b92d84318, type: 2}
   fixedRooms:
   - {fileID: 11400000, guid: dac1a35b68174864eb7904d9e24ae8b2, type: 2}
-  randomRoomGenerators:
-  - {fileID: 11400000, guid: cf8621908cdf0f34baa2b522323cfba2, type: 2}
-  - {fileID: 11400000, guid: d65998b2ba9713a44b46acc4cb04748c, type: 2}
+  roomGenerators:
+  - {fileID: 11400000, guid: 6177023d68aecdb4aa5402d7caa528c1, type: 2}
+  - {fileID: 11400000, guid: 057c8ce16a4d22c4e8e9d959d2830ecd, type: 2}
+  - {fileID: 11400000, guid: bdf5a14c2ace5e64e9adb68a18fa72d0, type: 2}
+  - {fileID: 11400000, guid: a319d5d03093e144aba36ebd9b845065, type: 2}
+--- !u!114 &1523422758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523422754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef73e453812b7144b355431004dcef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapWidth: 100
+  mapHeight: 100
+  roomManager: {fileID: 1523422757}
+  corridorManager: {fileID: 1011116440}
 --- !u!1 &1539500560
 GameObject:
   m_ObjectHideFlags: 0

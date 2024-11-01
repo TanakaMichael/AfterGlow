@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class TileData
 {
+    public int x;
+    public int y;
     public bool isWalkable = true;
     public SpawnSpecialObjectSettings spawnSpecialObjectSettings;
     public SpawnEnemySettings spawnEnemySettings;
@@ -28,9 +30,7 @@ public class TileData
     }
     public TileData()
     {
-        spawnSpecialObjectSettings = new SpawnSpecialObjectSettings();
-        spawnEnemySettings = new SpawnEnemySettings();
-        spawnNPCSettings = new SpawnNPCSettings();
+
     }
 
 }

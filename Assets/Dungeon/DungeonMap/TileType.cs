@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum DesignCategory
+public enum TileType
 {
-    None,
-    Wall, 
+    Empty,
     Floor,
-    Gate,
+    Wall,
     Corridor,
-    SecretCorridor
+    SecretCorridor,
+    // その他のタイルタイプ
 }

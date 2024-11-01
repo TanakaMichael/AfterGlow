@@ -87,5 +87,21 @@ public abstract class RoomGeneratorBase : ScriptableObject, IRoomGenerator
     /// </summary>
     protected abstract float CalculateWeightBasedOnShape(Room room, Vector2Int position);
 
-    
+    /// <summary>
+    /// 部屋の輪郭を壁で覆うメソッド
+    /// </summary>
+    protected void SetRoomOutlineAsWalls(Room room)
+    {
+        for (int y = 0; y < room.height; y++)
+        {
+            for (int x = 0; x < room.width; x++)
+            {
+                if (x == 0 || x == room.width - 1 || y == 0 || y == room.height - 1)
+                {
+                    room.tiles[y][x].isWalkable = false;
+                    room.tiles[y][x].designCategory = DesignCategory.Wall;
+                }
+            }
+        }
+    }
 }

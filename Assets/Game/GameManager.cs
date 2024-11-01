@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     // 各種Managerへの参照
     public RoomManager RoomManager;
     public AreaManager AreaManager;
+    public CorridorManager corridorManager;
     public EnemyManager enemyManager;
     public EventManager eventManager;
     public ItemManager itemManager;
@@ -26,7 +27,9 @@ public class GameManager : MonoBehaviour
         RoomManager.AssignRoomPositions(AreaManager.areas); // エリアを基準に部屋の位置を決める
         RoomManager.AssignRoomType(); // 部屋の種類を決める
         RoomManager.GenerateRooms(); // 部屋を生成する
-        RoomManager.AssignEntrance
+        RoomManager.AssignSpawnData(); // スポーンデータの設定
+        corridorManager.GenerateCorridors(RoomManager.rooms); // 通路を生成する
+
 
     }
 
@@ -91,6 +94,7 @@ public class GameManager : MonoBehaviour
                     if (manager is EventManager) eventManager = (EventManager)manager;
                     if (manager is ItemManager) itemManager = (ItemManager)manager;
                     if (manager is SpecialObjectManager) specialObjectManager = (SpecialObjectManager)manager;
+                    if (manager is CorridorManager) corridorManager = (CorridorManager)manager;
 
                 }
             }

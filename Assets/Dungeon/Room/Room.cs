@@ -95,4 +95,21 @@ public class Room
     public RoomType GetRoomType(){
         return roomType;
     }
+    public List<Vector2Int> GetEntrancePositions()
+    {
+        List<Vector2Int> entrances = new List<Vector2Int>();
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            for (int j = 0; j < tiles[i].Count; j++)
+            {
+                if (tiles[i][j].isEntrance)
+                {
+                    int tileX = x + j;
+                    int tileY = y + i;
+                    entrances.Add(new Vector2Int(tileX, tileY));
+                }
+            }
+        }
+        return entrances;
+    }
 }

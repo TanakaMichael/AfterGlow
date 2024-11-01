@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public enum DesignType
 {
     None,
@@ -11,6 +11,8 @@ public enum DesignType
     CrackedStoneFloor,
     GrassFloor,
     StonePillars,
-
+    CrackedStoneCorridor, 
+    StoneCorridor,
+    SecretPassage
     
 }

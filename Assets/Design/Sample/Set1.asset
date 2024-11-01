@@ -9,14 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7d63ab8999dfbe4b8ece5aa57bea916, type: 3}
-  m_Name: Basic1
+  m_Script: {fileID: 11500000, guid: 45c31df68be0cb94cb91959a8b0791b4, type: 3}
+  m_Name: Set1
   m_EditorClassIdentifier: 
-  entranceOptions:
-    spawnPosition: 2
-    weightedPositions: []
-    exitDesignCategory: 3
-  exitOptions:
-    spawnPosition: 2
-    weightedPositions: []
-    exitDesignCategory: 3
+  tilePrefabs:
+  - designType: 0
+    prefab: {fileID: 0}
+  - designType: 0
+    prefab: {fileID: 0}

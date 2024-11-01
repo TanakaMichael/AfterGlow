@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.WSA;
 
 /// <summary>
 /// 固定部屋を表すクラス
@@ -109,11 +110,34 @@ public class FixedRoom : ScriptableObject
     
         // 新しい Room を作成
         Room room = new Room(roomId, position.x, position.y, size.x, size.y, area);
+        
     
         // FixedRoom のデータを Room に適用
         room.ApplyFixedRoomData(this);
     
         return room;
+    }
+    private List<List<TileData>> ExtractCustomTileToTileData(){
+        List<List<TileData>> tileData = new List<List<TileData>>();
+        // ここにタイルデータの抽出と変換処理を記述する
+        for(int i = 0; i < tiles.Count; i++){
+            tileData.Add(new List<TileData>());
+            for(int j = 0; j < tiles[i].Count; j++){
+                TileData tile = new TileData();
+                tile.isWalkable = tiles[i][j].isWalkable;
+                tile.spawnSpecialObjectSettings = tiles[i][j].spawnSpecialObjectSettings;
+                tile.spawnEnemySettings = tiles[i][j].spawnEnemySettings;
+                tile.spawnNPCSettings = tiles[i][j].spawnNPCSettings;
+
+                tile.designType = tiles[i][j].designType;
+                tile.designCategory = tiles[i][j].designCategory;
+                tile.isExit = tiles[i][j].isExit;
+                tile.isEntrance = tiles[i][j].isEntrance;
+                tile.priority = tiles[i][j].priority;
+                tileData[i].Add(tile);
+            }
+        }
+        return tileData;
     }
 
     // フラグを追加
@@ -172,7 +196,7 @@ public class FixedRoom : ScriptableObject
 
         // 4. FixedRoom から Room を生成
         Room newRoom = selectedFixedRoom.ToRoom(roomId, area, position);
-
+        newRoom.tiles = selectedFixedRoom.ExtractCustomTileToTileData();
 
         return newRoom;
     }

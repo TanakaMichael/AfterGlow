@@ -6,9 +6,9 @@ using UnityEngine;
 public class CustomTile : Tile
 {
     public bool isWalkable = true;
-    public SpawnSpecialObjectSettings spawnSpecialObjectSettings = new SpawnSpecialObjectSettings();
-    public SpawnEnemySettings spawnEnemySettings = new SpawnEnemySettings();
-    public SpawnNPCSettings spawnNPCSettings = new SpawnNPCSettings();
+    public SpawnSpecialObjectSettings spawnSpecialObjectSettings;
+    public SpawnEnemySettings spawnEnemySettings;
+    public SpawnNPCSettings spawnNPCSettings;
     public DesignType designType = DesignType.None;
     public DesignCategory designCategory = DesignCategory.None;
     public bool isExit = false;

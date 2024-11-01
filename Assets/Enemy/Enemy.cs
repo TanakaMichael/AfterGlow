@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 // おそらく変わる
-[CreateAssetMenu(fileName ="newEnemy", menuName = "Dungeon/Enemies/NewEnemies")]
-public class Enemy : ScriptableObject
+
+public class Enemy
 {
     public GameObject me;
     public float priority;
