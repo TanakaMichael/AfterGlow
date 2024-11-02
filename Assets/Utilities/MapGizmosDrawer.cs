@@ -29,9 +29,11 @@ public class MapGizmosDrawer : MonoBehaviour
     public float entranceSize = 0.2f;
     public float exitSize = 0.2f;
     public float tileSize = 1f; // タイルのサイズ
+    public bool draw = false; // デバッグ情報を表示するかどうか
 
     private void OnDrawGizmos()
     {
+        if (!draw) return;
         if (roomManager == null)
         {
             Gizmos.color = Color.yellow;

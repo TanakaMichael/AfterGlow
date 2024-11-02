@@ -47,8 +47,8 @@ public class MazeCheckerboardRoomGenerator : RoomGeneratorBase
         SetRoomOutlineAsWalls(room);
 
         // 出入り口のウェイト設定
-        SetEntranceExitWeights(room, true); // Entrance
-        SetEntranceExitWeights(room, false); // Exit
+        SetEntranceExitWeights(room, isEntrance); // Entrance
+        SetEntranceExitWeights(room, isExit); // Exit
     }
 
     private void GenerateCheckerboardPattern(Room room)

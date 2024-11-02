@@ -21,6 +21,12 @@ public class DungeonTile
     public DesignType designType = DesignType.None;
     public DesignCategory designCategory = DesignCategory.None;
 
+    public float lightIntensity = 0f; // タイルの初期の明るさを0に
+    public Color accumulatedColor = Color.black; // 累積カラーを黒で初期化
+    public float transparency = 1f; // タイルの透過率（1f：完全に透過、0f：完全に遮蔽）
+    public GameObject tileGameObject; // タイルの実際のゲームオブジェクト
+    public Color initialColor = Color.white; // 初期色を保持
+
     [Range(0f, 1f)]
     public int priority = 0; // 優先度
 
@@ -28,6 +34,19 @@ public class DungeonTile
     {
         this.x = x;
         this.y = y;
+        // タイルの種類に応じて透明度を設定
+        switch (tileType)
+        {
+            case TileType.Wall:
+                transparency = 0.3f; // 壁は光を通しにくくする
+                break;
+            case TileType.Floor:
+                transparency = 0.9f; // 床は光を通しやすくする
+                break;
+            default:
+                transparency = 1f; // その他のタイルの透明度
+                break;
+        }
     }
 
     // デザインタイプを設定するメソッド
@@ -62,6 +81,18 @@ public class DungeonTile
             default:
                 designType = DesignType.None;
                 break;
+        }
+    }
+    // タイルの初期色を設定するメソッド
+    public void SetInitialColor()
+    {
+        if (tileGameObject != null)
+        {
+            SpriteRenderer sr = tileGameObject.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                initialColor = sr.color;
+            }
         }
     }
 }

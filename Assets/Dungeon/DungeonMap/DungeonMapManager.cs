@@ -22,6 +22,15 @@ public class DungeonMapManager : MonoBehaviour
             {
                 DungeonTile tile = new DungeonTile(x, y);
                 column.Add(tile);
+                // タイルの初期色を設定
+                if (tile.tileGameObject != null)
+                {
+                    SpriteRenderer sr = tile.tileGameObject.GetComponent<SpriteRenderer>();
+                    if (sr != null)
+                    {
+                        sr.color = tile.initialColor;
+                    }
+                }
             }
             dungeonTiles.Add(column);
         }
@@ -36,6 +45,13 @@ public class DungeonMapManager : MonoBehaviour
         foreach (Corridor corridor in corridorManager.corridors)
         {
             ApplyCorridorToMap(corridor);
+        }
+        foreach (var column in dungeonTiles)
+        {
+            foreach (var tile in column)
+            {
+                tile.SetInitialColor(); // タイルの初期色を保存
+            }
         }
 
         // 壁の分類を実行
@@ -150,10 +166,13 @@ public class DungeonMapManager : MonoBehaviour
                     DungeonTile tileBelow = GetTile(x, y - 1);
 
                     // 床が下にあり、上が空のタイルの場合
-                    if (tileBelow != null && tileBelow.tileType == TileType.Floor &&
-                        (tileAbove == null || tileAbove.tileType == TileType.Empty))
-                    {
+                    //if (tileBelow != null && tileBelow.tileType == TileType.Floor &&
+                    //    (tileAbove == null || tileAbove.tileType == TileType.Empty))
+                    //{
                         // デザインタイプを外部の壁に変更
+                    //    tile.designType = DesignType.OuterWall;
+                    //}
+                    if(tileBelow != null && tileBelow.tileType == TileType.Floor){
                         tile.designType = DesignType.OuterWall;
                     }
                     else

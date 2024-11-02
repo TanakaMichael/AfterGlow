@@ -23,13 +23,17 @@ public abstract class RoomGeneratorBase : ScriptableObject, IRoomGenerator
 
     [Header("Entrance")]
     public int entranceCount = 2;
+    public bool isEntrance = false;
     [Header("Exit")]
     public int exitCount = 2;
+    public bool isExit = false;
 
     protected RoomGeneratorBase()
     {
         entranceOptions = new EntranceExitOptions(SpawnPosition.Random);
         exitOptions = new EntranceExitOptions(SpawnPosition.Random);
+        if(entranceCount >= 0) isEntrance = false;
+        if(exitCount >= 0) isExit = false;
     }
 
     public abstract void GenerateRoom(Room room);

@@ -26,6 +26,10 @@ public class TileData
             if(Random.value < 0.1f) designType = DesignType.CrackedStoneWall;
             else designType = DesignType.StoneWall;
         }
+        else if(designCategory == DesignCategory.Corridor){
+            if(Random.value < 0.1f) designType = DesignType.CrackedStoneCorridor;
+            else designType = DesignType.StoneCorridor;
+        }
         this.designCategory = designCategory;
     }
     public TileData()

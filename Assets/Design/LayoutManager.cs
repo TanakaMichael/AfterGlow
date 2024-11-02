@@ -51,7 +51,7 @@ public class LayoutManager : MonoBehaviour
                 GameManager.Log($"Duplicate DesignType {tilePrefab.designType} in tile set {selectedTileSet.setName}");
             }
         }
-
+        GameManager.Log($"dungeonMap: {dungeonMapManager.dungeonTiles.Count}");
         // タイルの配置を開始
         foreach (var column in dungeonMapManager.dungeonTiles)
         {
@@ -72,7 +72,8 @@ public class LayoutManager : MonoBehaviour
         {
             // タイルの位置にプレハブをインスタンス化
             Vector3 position = new Vector3(tile.x, tile.y, 0);
-            Instantiate(prefab, position, Quaternion.identity, transform);
+            GameObject tileObj = Instantiate(prefab, position, Quaternion.identity, transform);
+            tile.tileGameObject = tileObj; // タイルのゲームオブジェクトを設定
         }
         else
         {
@@ -80,4 +81,5 @@ public class LayoutManager : MonoBehaviour
             Debug.LogWarning($"No prefab found for DesignType {tile.designType}");
         }
     }
+
 }

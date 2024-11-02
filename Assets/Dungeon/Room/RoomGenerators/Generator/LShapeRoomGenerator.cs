@@ -68,8 +68,9 @@ public class LShapeRoomGenerator : RoomGeneratorBase
         SetRoomOutlineAsWalls(room);
 
         // 出入り口のウェイト設定
-        SetEntranceExitWeights(room, true); // Entrance
-        SetEntranceExitWeights(room, false); // Exit
+        if(entranceCount >= 0) 
+        SetEntranceExitWeights(room, isEntrance); // Entrance
+        SetEntranceExitWeights(room, isExit); // Exit
     }
 
     protected override List<Vector2Int> GetRelevantWallTiles(Room room)

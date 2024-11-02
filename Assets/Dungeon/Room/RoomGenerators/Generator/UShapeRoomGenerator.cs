@@ -42,48 +42,48 @@ public class UShapeRoomGenerator : RoomGeneratorBase
                         if (y < room.height / 2 || (x < room.width / 4 || x > 3 * room.width / 4))
                         {
                             tile.isWalkable = true;
-                            tile.designCategory = DesignCategory.Floor;
+                            tile.SetDesignType(DesignCategory.Floor);
                         }
                         else
                         {
                             tile.isWalkable = false;
-                            tile.designCategory = DesignCategory.Wall;
+                            tile.SetDesignType(DesignCategory.Wall);
                         }
                         break;
                     case 1: // 上向き U 字
                         if (y >= room.height / 2 || (x < room.width / 4 || x > 3 * room.width / 4))
                         {
                             tile.isWalkable = true;
-                            tile.designCategory = DesignCategory.Floor;
+                            tile.SetDesignType(DesignCategory.Floor);
                         }
                         else
                         {
                             tile.isWalkable = false;
-                            tile.designCategory = DesignCategory.Wall;
+                            tile.SetDesignType(DesignCategory.Wall);
                         }
                         break;
                     case 2: // 左向き U 字
                         if (x < room.width / 2 || (y < room.height / 4 || y > 3 * room.height / 4))
                         {
                             tile.isWalkable = true;
-                            tile.designCategory = DesignCategory.Floor;
+                            tile.SetDesignType(DesignCategory.Floor);
                         }
                         else
                         {
                             tile.isWalkable = false;
-                            tile.designCategory = DesignCategory.Wall;
+                            tile.SetDesignType(DesignCategory.Wall);
                         }
                         break;
                     case 3: // 右向き U 字
                         if (x >= room.width / 2 || (y < room.height / 4 || y > 3 * room.height / 4))
                         {
                             tile.isWalkable = true;
-                            tile.designCategory = DesignCategory.Floor;
+                            tile.SetDesignType(DesignCategory.Floor);
                         }
                         else
                         {
                             tile.isWalkable = false;
-                            tile.designCategory = DesignCategory.Wall;
+                            tile.SetDesignType(DesignCategory.Wall);
                         }
                         break;
                 }
@@ -96,8 +96,8 @@ public class UShapeRoomGenerator : RoomGeneratorBase
         SetRoomOutlineAsWalls(room);
 
         // 出入り口のウェイト設定
-        SetEntranceExitWeights(room, true); // Entrance
-        SetEntranceExitWeights(room, false); // Exit
+        SetEntranceExitWeights(room, isEntrance); // Entrance
+        SetEntranceExitWeights(room, isExit); // Exit
     }
 
     protected override List<Vector2Int> GetRelevantWallTiles(Room room)

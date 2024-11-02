@@ -9,6 +9,9 @@ public class SpecialObjectManager : MonoBehaviour
     [Header("Special Object Sets")]
     public List<SpecialObjectSetEntry> specialObjectSets; // SpecialObjectSpawnPattern ごとの SpecialObjectSet のリスト
 
+    // 生成された SpecialObjectInstance のリスト
+    public List<SpecialObjectInstance> specialObjectInstances = new List<SpecialObjectInstance>();
+
     private Dictionary<SpecialObjectSpawnPattern, SpecialObjectSet> patternToObjectSet;
 
     public void SpawnSpecialObjects()
@@ -88,8 +91,28 @@ public class SpecialObjectManager : MonoBehaviour
     private void InstantiateSpecialObject(GameObject prefab, DungeonTile tile)
     {
         Vector3 position = new Vector3(tile.x, tile.y, 0);
-        Instantiate(prefab, position, Quaternion.identity, transform);
+        GameObject obj = Instantiate(prefab, position, Quaternion.identity, transform);
+
+        // SpecialObjectProperties コンポーネントから光源情報を取得
+        SpecialObjectProperties properties = obj.GetComponent<SpecialObjectProperties>();
+        if (properties != null)
+        {
+            // SpecialObjectInstance を作成し、リストに追加
+            SpecialObjectInstance instance = new SpecialObjectInstance(
+                obj,
+                properties.lightRadius,
+                properties.lightIntensity,
+                properties.canOverbright,
+                properties.lightColor
+            );
+            specialObjectInstances.Add(instance);
+        }
+        else
+        {
+            Debug.LogWarning("SpecialObjectProperties がアタッチされていません。光源として扱われません。");
+        }
     }
+
 }
 
 [System.Serializable]
