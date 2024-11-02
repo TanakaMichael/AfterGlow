@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd391efa9e8b4b34e86cb69647e201ed, type: 3}
   m_Name: sampleBsp
   m_EditorClassIdentifier: 
-  min_split_size: 20
-  max_split_size: 10
-  max_split_depth: 5
+  minSplitSize: 20
+  maxSplitSize: 10
+  maxSplitDepth: 8

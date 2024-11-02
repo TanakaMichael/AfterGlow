@@ -15,6 +15,20 @@ MonoBehaviour:
   setName: 
   tilePrefabs:
   - designType: 0
-    prefab: {fileID: 0}
+    prefab: {fileID: 5390535396793311173, guid: 2e8c688fcea45f7409cfb9826a2cf752, type: 3}
   - designType: 1
-    prefab: {fileID: 0}
+    prefab: {fileID: 6660818634660485264, guid: 53f60175baaa31647911513f4ad5a1af, type: 3}
+  - designType: 2
+    prefab: {fileID: 8137567750153630088, guid: 12e724246aee82447a8621432b9d4460, type: 3}
+  - designType: 3
+    prefab: {fileID: 7294538824137966143, guid: ff9908485a7ac1f4ebaee7e00fc1cc72, type: 3}
+  - designType: 4
+    prefab: {fileID: 200052688550586938, guid: 9f3d93f9f9c925a4ba9d65cd1b8732f9, type: 3}
+  - designType: 8
+    prefab: {fileID: 3424801158911227101, guid: 963a7cdc27ab2f246b90235ac3424339, type: 3}
+  - designType: 7
+    prefab: {fileID: 6094950007133295188, guid: 2249b4280bbd9034781fe739169026ec, type: 3}
+  - designType: 10
+    prefab: {fileID: 1970582402523512754, guid: 6ddef259de604634c82156f1cc88edf7, type: 3}
+  - designType: 9
+    prefab: {fileID: 200052688550586938, guid: 9f3d93f9f9c925a4ba9d65cd1b8732f9, type: 3}
