@@ -5,6 +5,7 @@ public class SpecialObjectManager : MonoBehaviour
 {
     [Header("References")]
     public DungeonMapManager dungeonMapManager; // DungeonMapManager への参照
+    public LightingManager lightingManager; // LightingManagerへの参照を追加
 
     [Header("Special Object Sets")]
     public List<SpecialObjectSetEntry> specialObjectSets; // SpecialObjectSpawnPattern ごとの SpecialObjectSet のリスト
@@ -111,8 +112,14 @@ public class SpecialObjectManager : MonoBehaviour
         {
             Debug.LogWarning("SpecialObjectProperties がアタッチされていません。光源として扱われません。");
         }
-    }
 
+        // LightSource コンポーネントがアタッチされていたら LightingManager に追加
+        LightSource lightSource = obj.GetComponent<LightSource>();
+        if (lightSource != null && lightingManager != null)
+        {
+            lightingManager.AddLightSource(lightSource);
+        }
+    }
 }
 
 [System.Serializable]

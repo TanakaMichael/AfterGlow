@@ -19,3 +19,17 @@ public class FixedRoomEditor : Editor
         }
     }
 }
+
+public static class ListExtensions
+{
+    public static T GetRandomElement<T>(this List<T> list)
+    {
+        if (list == null || list.Count == 0)
+        {
+            return default; // 空リストの場合はデフォルト値を返す
+        }
+
+        int randomIndex = Random.Range(0, list.Count);
+        return list[randomIndex];
+    }
+}

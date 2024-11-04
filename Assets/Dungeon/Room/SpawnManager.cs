@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class SpawnManager
+public class SpawnManager : MonoBehaviour
 {
     [Range(0f, 1f)]
     public float nearWallWeight = 0.7f; // 壁際の配置確率

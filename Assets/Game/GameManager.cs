@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     public ItemManager itemManager;
     public SpecialObjectManager specialObjectManager;
     public DungeonMapManager dungeonMapManager;
-    public LayoutManager layoutManager;
     public LightingManager lightingManager;
     private List<MonoBehaviour> managers = new List<MonoBehaviour>();
 
@@ -33,10 +32,9 @@ public class GameManager : MonoBehaviour
         RoomManager.AssignSpawnData(); // スポーンデータの設定
         corridorManager.GenerateCorridors(RoomManager.rooms); // 通路を生成する
         dungeonMapManager.GenerateDungeonMap(); // ダンジョンタイルを生成する
-        layoutManager.GenerateLayout(); // ダンジョンを配置
-
+        dungeonMapManager.PlaceLightSources(); // ライトソースを置く
         specialObjectManager.SpawnSpecialObjects(); // specialObjectを生成する
-        lightingManager.init();
+        lightingManager.Init();
     }
 
     void Awake()
@@ -75,7 +73,6 @@ public class GameManager : MonoBehaviour
                     if (manager is ItemManager) itemManager = (ItemManager)manager;
                     if (manager is SpecialObjectManager) specialObjectManager = (SpecialObjectManager)manager;
                     if (manager is CorridorManager) corridorManager = (CorridorManager)manager;
-                    if (manager is LayoutManager) layoutManager = (LayoutManager)manager;
                     if (manager is DungeonMapManager) dungeonMapManager = (DungeonMapManager)manager;
                     if (manager is LightingManager) lightingManager = (LightingManager)manager;
 

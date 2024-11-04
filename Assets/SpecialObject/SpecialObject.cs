@@ -4,5 +4,5 @@ using UnityEngine;
 [System.Serializable]
 public class SpecialObject
 {
-    public GameObject gameObject { get; set; }
+    public GameObject gameObject ;
 }

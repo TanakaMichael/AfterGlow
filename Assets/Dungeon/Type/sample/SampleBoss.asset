@@ -21,8 +21,8 @@ MonoBehaviour:
   enemyCount: 0
   npcSettings: {fileID: 0}
   npcCount: 0
-  specialObjectSettings: {fileID: 0}
-  specialObjectCount: 0
+  specialObjectSettings: {fileID: 11400000, guid: 94fb0126567df82458f0e65a53618212, type: 2}
+  specialObjectCount: 5
   isFixedProbability: 0.5
   entranceSettings:
     minCount: 0
