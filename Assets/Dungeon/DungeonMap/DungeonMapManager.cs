@@ -287,7 +287,7 @@ public class DungeonMapManager : MonoBehaviour
 
         if (player != null && player.gameObject != null)
         {
-            LightSource playerLight = player.playerLight;
+            LightSource playerLight = player.lightSource;
             if (playerLight == null)
             {
                 Debug.LogError("LightSource component is missing on the instantiated lightSourcePrefab.");

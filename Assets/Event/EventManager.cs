@@ -1,3 +1,4 @@
+// EventManager.cs
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,6 @@ public class EventManager : MonoBehaviour
     {
         get
         {
-            // インスタンスが存在しない場合は新規作成
             if (_instance == null)
             {
                 GameObject obj = new GameObject("EventManager");
@@ -27,7 +27,6 @@ public class EventManager : MonoBehaviour
 
     private void Awake()
     {
-        // シングルトンの確保
         if (_instance == null)
         {
             _instance = this;
@@ -47,18 +46,22 @@ public class EventManager : MonoBehaviour
     /// <param name="listener">リスナーのデリゲート</param>
     public void StartListening(string eventName, Action<object[]> listener)
     {
-        Action<object[]> thisEvent;
-        if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
+        if (listener == null)
+        {
+            Debug.LogWarning($"Attempted to add a null listener to event '{eventName}'");
+            return;
+        }
+
+        if (eventDictionary.TryGetValue(eventName, out var thisEvent))
         {
             // 既存のイベントにリスナーを追加
             thisEvent += listener;
-            Instance.eventDictionary[eventName] = thisEvent;
+            eventDictionary[eventName] = thisEvent;
         }
         else
         {
             // 新規のイベントを作成
-            thisEvent += listener;
-            Instance.eventDictionary.Add(eventName, thisEvent);
+            eventDictionary.Add(eventName, listener);
         }
     }
 
@@ -70,12 +73,18 @@ public class EventManager : MonoBehaviour
     public void StopListening(string eventName, Action<object[]> listener)
     {
         if (_instance == null) return;
-        Action<object[]> thisEvent;
-        if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
+        
+        if (eventDictionary.TryGetValue(eventName, out var thisEvent))
         {
-            // イベントからリスナーを削除
             thisEvent -= listener;
-            Instance.eventDictionary[eventName] = thisEvent;
+            if (thisEvent == null)
+            {
+                eventDictionary.Remove(eventName);
+            }
+            else
+            {
+                eventDictionary[eventName] = thisEvent;
+            }
         }
     }
 
@@ -86,10 +95,21 @@ public class EventManager : MonoBehaviour
     /// <param name="parameters">イベントに渡すパラメータ</param>
     public void TriggerEvent(string eventName, params object[] parameters)
     {
-        Action<object[]> thisEvent = null;
-        if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
+        if (eventDictionary.TryGetValue(eventName, out var thisEvent))
         {
             thisEvent.Invoke(parameters);
+        }
+        else
+        {
+            Debug.LogWarning($"Event '{eventName}' triggered, but no listeners are registered.");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (eventDictionary != null)
+        {
+            eventDictionary.Clear();
         }
     }
 }

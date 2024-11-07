@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+// Weapon.cs
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+[CreateAssetMenu(fileName = "NewWeapon", menuName = "Inventory/Weapon")]
+public class Weapon : Item
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int attackPower;           // 攻撃力
+    public float attackSpeed;         // 攻撃速度
+    public GameObject abilityPrefab;  // 特殊能力のプレハブ（オプション）
+    public GameObject effectPrefab;   // エフェクトのプレハブ
 
-    // Update is called once per frame
-    void Update()
+    public override void Use()
     {
-        
+        base.Use();
+        EquipmentManager.Instance.EquipWeapon(this);
+    }
+    public void SetStatus(){
+        // 武器のステータスを設定する
+        PlayerStats.Instance.attackSpeed += attackSpeed;
+        PlayerStats.Instance.attackPower += attackPower;
     }
 }

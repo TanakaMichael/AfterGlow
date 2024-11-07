@@ -3,36 +3,32 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public LightSource playerLight;
+    public float moveSpeed = 5f;
+    public LightSource lightSource;
 
-    void Start()
+    private Rigidbody2D rb;
+    private Vector2 movement;
+
+    private void Start()
     {
-        // LightingManagerから動的ライトを取得
-        LightingManager lightingManager = GetComponent<LightingManager>();
-        if (lightingManager != null)
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        // 入力の取得
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            playerLight = lightingManager.lightSources.Find(ls => ls.isDynamic);
-            if (playerLight == null)
-            {
-                Debug.LogWarning("No dynamic LightSource found for the player.");
-            }
+            InventoryUI.Instance.ToggleInventory();
         }
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        // プレイヤーの移動処理（例としてキーボード入力を使用）
-        float moveX = Input.GetAxis("Horizontal");
-        float moveY = Input.GetAxis("Vertical");
-        Vector3 move = new Vector3(moveX, moveY, 0) * Time.deltaTime * 5f; // 速度調整
-
-        transform.position += move;
-
-        if (playerLight != null)
-        {
-            // ライトの位置をプレイヤーの位置に同期
-            playerLight.transform.position = transform.position;
-            playerLight.position = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
-        }
+        // プレイヤーの移動
+        rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
     }
 }

@@ -1,6 +1,6 @@
 // LightSource.cs
 using UnityEngine;
-
+[System.Serializable]
 public class LightSource : MonoBehaviour
 {
     public Vector2Int position; // タイル座標
